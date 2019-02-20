@@ -1,0 +1,74 @@
+$ head -1 maze_ia.py
+#!/usr/bin/env python3
+
+$ ./maze /path/to/maze_ia.py
+####################
+#                  #
+#                  #
+#                  #
+#   o          o   #
+#                 A#
+#                o #
+#                  #
+#                  #
+####################
+A's turn at loop 1000 !
+####################
+#                  #
+#                  #
+#                  #
+#   o          o   #
+#                A #
+#                o #
+#                  #
+#                  #
+####################
+A's turn at loop 999 !
+####################
+#                  #
+#                  #
+#                  #
+#   o          o   #
+#                  #
+#                A #
+#                  #
+#                  #
+####################
+A's turn at loop 998 !
+
+< this goes on for 996 turns... >
+
+A's turn at loop 2 !
+####################
+#                  #
+#                  #
+#              A   #
+#              o   #
+#                  #
+#                  #
+#                  #
+#              oo  #
+####################
+A's turn at loop 1 !
+####################
+#                  #
+#                  #
+#             o    #
+#              A   #
+#                  #
+#                  #
+#                  #
+#              oo  #
+####################
+A: 144
+$
+
+Usage: maze [options] IA1 [IA2, ..., IA26]
+    -s SIZE, --size=SIZE             Specifies the size of the map (must be in s, m, l, xl, xxl), default m
+    -c NBR_COINS, --coins=NBR_COINS  Specifies the number of coins (> 0) default 3
+    -l NBR_LOOPS, --loop=NBR_LOOPS   Specifies the number of loops (> 10) default 1000
+    -z SLEEP_MS, --sleep=SLEEP_MS    Specifies the time the program will sleep between each turn default 100
+    -k KIND, --kind=KIND             Specifies the kind of the shape of the map (must be in line, empty, doors, columns, maze), default empty
+    -d, --debug                      Add some debug text
+    -h, --help                       Show this help
+    --show                           Display the game
