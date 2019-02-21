@@ -2,12 +2,6 @@
 from sys import stdin, stdout, stderr
 
 
-WALL = "*"
-BLANK = " "
-COIN = "o"
-BONUS = "!"
-
-
 class Queue:
     def __init__(self):
         self.queue = list()
@@ -30,14 +24,31 @@ class Queue:
         return self.queue
 
 
+class Resources:
+    def __init__(self):
+        self.coin = "o"
+        self.bonus = "!"
+        self.wall = "*"
+
+
+class Maze:
+    def __init__(self):
+        self.maze = list()
+
+    def get_maze(self):
+        line = ""
+        while line != "\n":
+            line = stdin.readln()
+            self.maze.append(line)
+        self.maze.remove(self.maze[0])
+
+
 class Intelligent_Agent:
     def __init__(self, name="Tai"):
         self.name = name
         self.letter = "A"
-        self.map = list()
-        self.posx = 2
-        self.posy = 2
-        self.resources = list()
+        self.posx = -2
+        self.posy = -2
 
     def greeting():
         stdin.readln()
@@ -48,26 +59,19 @@ class Intelligent_Agent:
         self.letter = letter(len[letter] - 1)
         stdout.write("OK\n\n")
 
-    def get_maze(self):
-        line = ""
-        while line != "\n":
-            line = stdin.readln()
-            self.map.append(line)
-        self.map.remove(self.map[0])
-
-    def get_IA_position(self):
-        for i in range(len(self.map) - 1):
-            for j in range(len(self.map[i]) - 1):
-                if self.map[i][j] == self.letter:
+    def get_IA_position(self, maze):
+        for i in range(len(maze) - 1):
+            for j in range(len(maze[i]) - 1):
+                if maze[i][j] == self.letter:
                     self.posx = i
                     self.posy = j
                     break
 
-    def get_resources_position(self):
-        for i in range(len(self.map) - 1):
-            for j in range(len(self.map[i]) - 1):
-                if self.map[i][j] == COIN
-                or self.map[i][j] == BONUS:
+    def get_resources_position(self, maze):
+        for i in range(len(maze) - 1):
+            for j in range(len(maze[i]) - 1):
+                if maze[i][j] == Resources.coin
+                or maze[i][j] == Resources.bonus:
                     temp_pos = []
                     temp_pos.append(i)
                     temp_pos.append(j)
