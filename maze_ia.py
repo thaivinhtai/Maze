@@ -37,7 +37,7 @@ class Intelligent_Agent:
         self.map = list()
         self.posx = 2
         self.posy = 2
-        self.resouces = list()
+        self.resources = list()
 
     def greeting():
         stdin.readln()
@@ -68,7 +68,11 @@ class Intelligent_Agent:
             for j in range(len(self.map[i]) - 1):
                 if self.map[i][j] == COIN
                 or self.map[i][j] == BONUS:
-
+                    temp_pos = []
+                    temp_pos.append(i)
+                    temp_pos.append(j)
+                    if temp_pos not in self.resources:
+                        self.resources.append(temp_pos)
 
     def move_left():
         stdin.write("MOVE LEFT\n\n")
