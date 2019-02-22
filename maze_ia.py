@@ -18,7 +18,7 @@ class Queue:
     def dequeue(self):
         if len(self.queue) > 0:
             return self.queue.pop()
-        return "Queue Empty!"
+        return None
 
     # Return the lenght of queue
     def size(self):
@@ -27,6 +27,43 @@ class Queue:
     # Print the queue
     def print_queue(self):
         return self.queue
+
+    # Check the queue is empty or not
+    def is_empty(self):
+        return len(self.queue) == 0
+
+    # Return fisrt element of the queue
+    def peek(self):
+        if len(self.queue) > 0:
+            return self.queue[0]
+        return None
+
+
+class Breadth_First_Search:
+    def __init__(self):
+        self.BLANK = 0
+        self.WALL = 1
+        self.IA = 2
+        self.VISITED = 3
+
+    def node(self, y, x, value):
+        node = {'x': None, 'y': None, 'value': None}
+        node['x'] = x
+        node['y'] = y
+        node['value'] = value
+        return node
+
+    def engine(self, walls, cols, rows):
+        open = Queue()
+        nodes = []
+        for i in range(cols):
+            nodes.append([])
+            for j in range(rows):
+                nodes[i].append(node(walls[i][j, i, j]))
+        def find_path(IAdata, start, goal):
+            if not open.is_empty():
+                open.clear()
+                
 
 
 class Maze:
@@ -86,6 +123,10 @@ class Intelligent_Agent:
                     self.posx = x
                     self.posy = y
                     break
+
+    # Find way to resources
+    def find_way():
+
 
     def move_left():
         stdin.write("MOVE LEFT\n\n")
