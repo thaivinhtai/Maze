@@ -109,6 +109,7 @@ class Intelligent_Agent:
 
 
 if __name__ == "main":
-    IA = Intelligent_Agent
-    play.greeting()
-    play.get_maze()
+    ia = Intelligent_Agent
+    ia.greeting()
+    maze = Maze
+    maze.get_maze()
