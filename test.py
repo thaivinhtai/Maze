@@ -14,6 +14,7 @@ def DFS(x,y,Map):
 from collections import deque
 def BFS(x,y,Map):
     queue = deque( [(x,y,None)]) #create queue
+    print(queue)
     while len(queue)>0: #make sure there are nodes to check left
         node = queue.popleft() #grab the first node
         x = node[0] #get x and y
@@ -42,7 +43,7 @@ def GetMap():
         ["wall","path","path","path","path","path","path","wall"],
         ["wall","path","path","wall","path","wall","wall","wall"],
         ["wall","path","path","path","path","path","path","wall"],
-        ["wall","exit","path","path","path","path","path","wall"],
+        ["wall","exit","path","path","path","path","exit","wall"],
         ["wall","wall","wall","wall","wall","wall","wall","wall"]
             ]
 
