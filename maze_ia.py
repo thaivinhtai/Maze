@@ -41,21 +41,22 @@ class Queue:
 
 class Breadth_First_Search:
     def run(self, y, x, Map, res):
-        stderr.write("BFS")
         direction = [[y - 1, x], [y + 1, x], [y, x - 1], [y, x + 1]]
-        open = Queue([(y, x)])
+        open = Queue([(y, x, None)])
         while len(open.queue) > 0:
             node = open.dequeue()
             y = node[0]
             x = node[1]
-
             if Map[y][x] == res:
-                return get_path_from_nodes(node)
+                return self.get_path_from_nodes(node)
             if Map[y][x] != Maze().path:
                 continue
+            stderr.write(Map[y][x])
             Map[y][x] = "Visited"
+            stderr.write(Map[y][x])
             for i in direction:
-                open.append((i[0], i[1], node))
+                open.enqueue((i[0], i[1], node))
+                stderr.write("this")
         return []
 
     def get_path_from_nodes(self, node):
@@ -79,12 +80,16 @@ class Maze:
     # Get the current Maze's status
     def get_maze(self):
         line = ""
+        temp_maze = []
         while line != "\n":
             line = stdin.readline()
-            self.maze.append(line)
-            #stderr.write("this: " + line)
-        self.maze.remove(self.maze[0])
-        #stderr.write(self.maze[0])
+            temp_maze.append(line)
+        temp_maze.remove(temp_maze[11])
+        temp_maze.remove(temp_maze[0])
+        for i in range(len(temp_maze)):
+            self.maze.append([])
+            for j in range(len(temp_maze[i])):
+                self.maze[i].append(temp_maze[i][j])
         return 0
 
 
@@ -97,25 +102,24 @@ class Intelligent_Agent:
 
     # Introduce IA to VM
     def greeting(self):
-        a = stdin.readline()
-        b = stdin.readline()
-        stderr.write(a)
-        stderr.write(b)
+        stdin.readline()
+        stdin.readline()
         stdout.write("I AM {IA}\n\n".format(IA=self.name))
         letter = stdin.readline()
         stdin.readline()
-        self.letter = letter[len(letter) - 1]
+        self.letter = letter[len(letter) - 2]
         stdout.write("OK\n\n")
         return 0
 
     # Figure out the position of IA
     def get_IA_position(self, maze):
         for y in range(len(maze)):
-            for x in range(len(maze[i])):
+            for x in range(len(maze[y])):
                 if maze[y][x] == self.letter:
                     self.posx = x
                     self.posy = y
-                    return (y, x)
+                    break
+        return (y, x)
 
     def move(self, y, x):
         if y - self.posy == 0 and x - self.posx == 1:
@@ -134,15 +138,15 @@ class Intelligent_Agent:
 def main():
     ia = Intelligent_Agent()
     ia.greeting()
-    #while stdin.readline() != "/n":
+    # while stdin.readline() != "/n":
     maze = Maze()
     maze.get_maze()
-    stderr.write(maze.maze[0])
-    step_to_bonus = Breadth_First_Search().run(ia.posy, ia.posx,
-                                               maze.maze, maze.bonus)
+    ia.get_IA_position(maze.maze)
+    # step_to_bonus = Breadth_First_Search().run(ia.posy, ia.posx,
+    #                                            maze.maze, maze.bonus)
     step_to_coin = Breadth_First_Search().run(ia.posy, ia.posx,
                                               maze.maze, maze.coin)
-    #stderr.write(step_to_coin[0])
+    # stderr.write(step_to_coin[0])
     # stderr.write(step_to_bonus)
     # if (len(step_to_bonus) <= 20) and
     #    (len(step_to_bonus) < (2 * len(step_to_coin))) and
