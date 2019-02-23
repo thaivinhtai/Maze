@@ -80,12 +80,11 @@ class Maze:
     def get_maze(self):
         self.list_line = []
         line = ""
-        temp_maze = []
         while line != "\n":
             line = stdin.readline()
             self.list_line.append(line)
-        self.list_line.remove(temp_maze[len(temp_maze) - 1])
-        self.list_line.remove(temp_maze[0])
+        self.list_line.remove(self.list_line[len(self.list_line) - 1])
+        self.list_line.remove(self.list_line[0])
         return 0
 
     # convert list_maze to nested list
