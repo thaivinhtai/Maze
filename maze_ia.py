@@ -4,8 +4,8 @@ from sys import stdin, stdout, stderr
 
 # Define Queue data str
 class Queue:
-    def __init__(self):
-        self.queue = list()
+    def __init__(self, elements):
+        self.queue = elements
 
     # Add element to first posotion of queue
     def enqueue(self, elements):
@@ -14,7 +14,7 @@ class Queue:
             return True
         return False
 
-    # Take the last element out of queue
+    # Take the first element out of queue
     def dequeue(self):
         if len(self.queue) > 0:
             return self.queue.pop()
@@ -40,36 +40,39 @@ class Queue:
 
 
 class Breadth_First_Search:
-    def __init__(self):
-        self.BLANK = 0
-        self.WALL = 1
-        self.IA = 2
-        self.VISITED = 3
+    def run(y, x, Map):
+        direction = [[y - 1, x], [y + 1, x]
+                     [y, x - 1], [y, x + 1]]
+        open = Queue([(y, x)])
+        while len(open) > 0:
+            node = open.dequeue()
+            y = node[0]
+            x = node[1]
 
-    def node(self, y, x, value):
-        node = {'x': None, 'y': None, 'value': None}
-        node['x'] = x
-        node['y'] = y
-        node['value'] = value
-        return node
+            if Map[y][x] in Maze().list_resoueces:
+                return get_path_from_nodes(node)
+            if Map[y][x] != Maze().path:
+                continue
+            Map[y][x] = "Visited"
+            for i in direction:
+                open.append((i[0], i[1], node))
+        return []
 
-    def engine(self, walls, cols, rows):
-        open = Queue()
-        nodes = []
-        for i in range(cols):
-            nodes.append([])
-            for j in range(rows):
-                nodes[i].append(node(walls[i][j, i, j]))
-        def find_path(IAdata, start, goal):
-            if not open.is_empty():
-                open.clear()
-                
+    def get_path_from_nodes(node):
+        path = []
+        while node is not None:
+            path.append((node[0], node[1]))
+            node = node[2]
+        return path
 
 
 class Maze:
     def __init__(self):
         self.maze = list()
         self.wall = "*"
+        self.path = " "
+        self.coin = "o"
+        self.bonus = "!"
         self.list_resoueces = ["o", "!"]
         self.list_resources_pos = list()
 
@@ -89,10 +92,10 @@ class Maze:
                 if self.maze[i][j] in self.list_resources:
                     temp_index = temp_index + 1
                     self.list_resources_pos.append([])
-                    if self.maze[i][j] == "o":
-                        self.list_resoueces_pos[temp_index].append("o")
+                    if self.maze[i][j] == self.coin:
+                        self.list_resoueces_pos[temp_index].append(self.coin)
                     elif self.maze[i][j] == "!":
-                        self.list_resoueces_pos[temp_index].appen("!")
+                        self.list_resoueces_pos[temp_index].appen(self.bonus)
                     self.list_resoueces_pos[temp_index].append(y)
                     self.list_resoueces_pos[temp_index].append(x)
 
@@ -124,10 +127,6 @@ class Intelligent_Agent:
                     self.posy = y
                     break
 
-    # Find way to resources
-    def find_way():
-
-
     def move_left():
         stdin.write("MOVE LEFT\n\n")
         move = [0, -1]
@@ -150,7 +149,8 @@ class Intelligent_Agent:
 
 
 if __name__ == "main":
-    ia = Intelligent_Agent
+    ia = Intelligent_Agent()
     ia.greeting()
-    maze = Maze
-    maze.get_maze()
+    maze = Maze()
+    map = maze.get_maze()
+    resources = maze.get_resources_pos()
