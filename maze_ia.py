@@ -40,7 +40,7 @@ class Queue:
 
 
 class Breadth_First_Search:
-    def run(y, x, Map):
+    def run(y, x, Map, res):
         direction = [[y - 1, x], [y + 1, x]
                      [y, x - 1], [y, x + 1]]
         open = Queue([(y, x)])
@@ -49,7 +49,7 @@ class Breadth_First_Search:
             y = node[0]
             x = node[1]
 
-            if Map[y][x] in Maze().list_resoueces:
+            if Map[y][x] == res:
                 return get_path_from_nodes(node)
             if Map[y][x] != Maze().path:
                 continue
@@ -80,24 +80,10 @@ class Maze:
     def get_maze(self):
         line = ""
         while line != "\n":
-            line = stdin.readln()
+            line = stdin.readline()
             self.maze.append(line)
+            stderr.write(line)
         self.maze.remove(self.maze[0])
-
-    # Get list of current resources position
-    def get_resources_pos():
-        temp_index = -1
-        for y in range(len(self.maze)):
-            for x in range(len(self.maze[i])):
-                if self.maze[i][j] in self.list_resources:
-                    temp_index = temp_index + 1
-                    self.list_resources_pos.append([])
-                    if self.maze[i][j] == self.coin:
-                        self.list_resoueces_pos[temp_index].append(self.coin)
-                    elif self.maze[i][j] == "!":
-                        self.list_resoueces_pos[temp_index].appen(self.bonus)
-                    self.list_resoueces_pos[temp_index].append(y)
-                    self.list_resoueces_pos[temp_index].append(x)
 
 
 class Intelligent_Agent:
@@ -112,9 +98,9 @@ class Intelligent_Agent:
         line = ""
         while line != "\n":
             line = stdin.readln()
-        stdout.write("I AM {name}\n\n".format(name=self.name))
-        letter = stdin.readln()
-        stdin.readln()
+        stdout.write("I AM {IA}\n\n".format(IA=self.name))
+        letter = stdin.readline()
+        stdin.readline()
         self.letter = letter(len[letter] - 1)
         stdout.write("OK\n\n")
 
@@ -125,32 +111,44 @@ class Intelligent_Agent:
                 if maze[y][x] == self.letter:
                     self.posx = x
                     self.posy = y
-                    break
+                    return (y, x)
 
-    def move_left():
-        stdin.write("MOVE LEFT\n\n")
-        move = [0, -1]
-        return move
+    def move(self, y, x):
+        if y - self.posy == 0 and x - self.posx == 1:
+            stdout.write("MOVE RIGHT\n\n")
+        elif y - self.posy == 0 and x - self.posx == -1:
+            stdout.write("MOVE LEFT\n\n")
+        elif y - self.posy == 1 and x - self.posx == 0:
+            stdout.write("MOVE DOWN\n\n")
+        elif y - self.posy == -1 and x - self.posx == 0:
+            stdout.write("MOVE UP\n\n")
+        self.posy = y
+        self.posx = x
 
-    def move_right():
-        stdin.write("MOVE RIGHT\n\n")
-        move = [0, 1]
-        return move
 
-    def move_up():
-        stdin.write("MOVE UP\n\n")
-        move = [-1, 0]
-        return move
-
-    def move_down():
-        stdin.write("MOVE DOWN\n\n")
-        move = [1, 0]
-        return move
+def main():
+    IA = Intelligent_Agent()
+    IA.greeting()
+    for turn in range(999):
+        maze = Maze()
+        maze.get_maze()
+        step_to_bonus = Breadth_First_Search().run(IA.posy, IA.posx,
+                                                   maze.maze, maze.bonus)
+        step_to_coin = Breadth_First_Search().run(IA.posy, IA.posx,
+                                                  maze.maze, maze.coin)
+        print(step_to_coin)
+        print(step_to_bonus)
+        if (len(step_to_bonus) <= 20) and
+           (len(step_to_bonus) < (2 * len(step_to_coin))) and
+           (len(step_to_bonus) > 0):
+            for i in step_to_bonus:
+                IA.move(i[0], i[1])
+        elif len(step_to_coin) > 0:
+            for i in step_to_coin:
+                IA.move(i[0], i[1])
+        for i in step_to_coin:
+            IA.move(i[0], i[1])
 
 
 if __name__ == "main":
-    ia = Intelligent_Agent()
-    ia.greeting()
-    maze = Maze()
-    map = maze.get_maze()
-    resources = maze.get_resources_pos()
+    main()

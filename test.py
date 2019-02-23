@@ -38,12 +38,12 @@ def GetMap():
     return [
         ["wall","wall","wall","wall","wall","wall","wall","wall"],
         ["wall","path","path","path","path","path","path","wall"],
-        ["wall","path","wall","path","path","path","path","wall"],
-        ["wall","path","path","path","wall","wall","path","wall"],
-        ["wall","path","wall","path","path","path","path","wall"],
-        ["wall","path","wall","wall","wall","wall","wall","wall"],
         ["wall","path","path","path","path","path","path","wall"],
-        ["wall","wall","wall","wall","wall","wall","exit","wall"]
+        ["wall","path","path","path","path","path","path","wall"],
+        ["wall","path","path","wall","path","wall","wall","wall"],
+        ["wall","path","path","path","path","path","path","wall"],
+        ["wall","exit","path","path","path","path","path","wall"],
+        ["wall","wall","wall","wall","wall","wall","wall","wall"]
             ]
 
 def DrawMap(Map,path):
