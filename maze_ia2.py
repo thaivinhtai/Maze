@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 from sys import stdin, stdout, stderr
+from time import sleep
 
 
 # Define Queue data str
@@ -47,7 +48,7 @@ class Breadth_First_Search:
             node = open.dequeue()
             y = node[0]
             x = node[1]
-            if Map[y][x] == res:
+            if Map[y][x] in res:
                 return self.get_path_from_nodes(node)
             if Map[y][x] != Maze().path and Map[y][x] != root_node:
                 continue
@@ -67,7 +68,6 @@ class Breadth_First_Search:
 
 class Maze:
     def __init__(self):
-        self.list_line = list()
         self.maze = list()
         self.wall = "*"
         self.path = " "
@@ -78,22 +78,18 @@ class Maze:
 
     # Get the current Maze's status
     def get_maze(self):
-        self.list_line = []
+        self.maze = []
         line = ""
         temp_maze = []
         while line != "\n":
             line = stdin.readline()
-            self.list_line.append(line)
-        self.list_line.remove(temp_maze[len(temp_maze) - 1])
-        self.list_line.remove(temp_maze[0])
-        return 0
-
-    # convert list_maze to nested list
-    def convert_maze(self):
-        for i in range(len(self.list_line)):
+            temp_maze.append(line)
+        temp_maze.remove(temp_maze[len(temp_maze) - 1])
+        temp_maze.remove(temp_maze[0])
+        for i in range(len(temp_maze)):
             self.maze.append([])
-            for j in range(len(self.list_line[i])):
-                self.maze[i].append(self.list_line[i][j])
+            for j in range(len(temp_maze[i])):
+                self.maze[i].append(temp_maze[i][j])
         return 0
 
 
@@ -139,6 +135,12 @@ class Intelligent_Agent:
         self.posx = x
         return 0
 
+    # Wait the VM
+    def wait_vm(self):
+        line = ""
+        while line != "\n":
+            line = stdin.readline()
+
 
 def main():
     ia = Intelligent_Agent()
@@ -146,36 +148,39 @@ def main():
     maze = Maze()
     maze.get_maze()
     while True:
-        maze.convert_maze()
+        # maze.get_maze()
+        stderr.write(str(maze.maze))
         ia.get_IA_position(maze.maze)
-        step_to_bonus = Breadth_First_Search().run(ia.posy, ia.posx,
-                                                   maze.maze, maze.bonus)
-        step_to_coin = Breadth_First_Search().run(ia.posy, ia.posx,
-                                                  maze.maze, maze.coin)
-        step_to_coin.reverse()
-        step_to_bonus.reverse()
-        len_coin = len(step_to_coin) - 1
-        len_bonus = len(step_to_bonus) - 1
-        if len_bonus > 0 and len_bonus <= 20:
-            step_to_bonus.remove(step_to_bonus[0])
-            if len_bonus * 2 <= len_coin:
-                for i in step_to_bonus:
-                    ia.move(i[0], i[1])
-                    maze.get_maze()
-                continue
-        if len(step_to_coin) > 0:
-            step_to_coin.remove(step_to_coin[0])
-            for i in step_to_coin:
-                ia.move(i[0], i[1])
-                maze.get_maze()
-        # step_to_res = Breadth_First_Search().run(ia.posy, ia.posx,
-        #                                          maze.maze,
-        #                                          maze.list_resoueces)
-        # step_to_res.reverse()
-        # step_to_res.remove(step_to_res[0])
-        # for i in step_to_res:
-        #     ia.move(i[0], i[1])
-        #     maze.get_maze()
+        stderr.write("Name: " + ia.letter + "\n")
+        # step_to_bonus = Breadth_First_Search().run(ia.posy, ia.posx,
+        #                                            maze.maze, maze.bonus)
+        # step_to_coin = Breadth_First_Search().run(ia.posy, ia.posx,
+        #                                           maze.maze, maze.coin)
+        # step_to_coin.reverse()
+        # step_to_bonus.reverse()
+        # stderr.write(str(step_to_coin))
+        # stderr.write(str(step_to_bonus))
+        # if (len(step_to_bonus) > 0) and (len(step_to_bonus) <= 20) and \
+        #    (len(step_to_bonus) < (2 * len(step_to_coin))):
+        #     for i in step_to_bonus:
+        #         ia.move(i[0], i[1])
+        #         sleep(.100)
+        # elif len(step_to_coin) > 0:
+        #     for i in step_to_coin:
+        #         ia.move(i[0], i[1])
+        #         sleep(.100)
+        stderr.write(str(ia.posy) + "-" + str(ia.posx) + "\n")
+        step_to_res = Breadth_First_Search().run(ia.posy, ia.posx,
+                                                 maze.maze, maze.list_resoueces)
+        step_to_res.reverse()
+        step_to_res.remove(step_to_res[0])
+        stderr.write(str(step_to_res) + "\n")
+        for i in step_to_res:
+            stderr.write("this: \n")
+            ia.move(i[0], i[1])
+            maze.get_maze()
+            # ia.wait_vm()
+            # sleep(.1000)
     return 0
 
 
