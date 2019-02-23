@@ -47,7 +47,7 @@ class Breadth_First_Search:
             node = open.dequeue()
             y = node[0]
             x = node[1]
-            if Map[y][x] == res:
+            if Map[y][x] in res:
                 return self.get_path_from_nodes(node)
             if Map[y][x] != Maze().path and Map[y][x] != root_node:
                 continue
@@ -89,6 +89,7 @@ class Maze:
 
     # convert list_maze to nested list
     def convert_maze(self):
+        self.maze = []
         for i in range(len(self.list_line)):
             self.maze.append([])
             for j in range(len(self.list_line[i])):
@@ -121,9 +122,8 @@ class Intelligent_Agent:
                 if maze[y][x] == self.letter:
                     self.posx = x
                     self.posy = y
-                    stderr.write("pos: " + str(y) + " - " + str(x) + "\n")
                     break
-        return (y, x)
+        return 0
 
     def move(self, y, x):
         if y - self.posy == 0 and x - self.posx == 1:
@@ -147,34 +147,34 @@ def main():
     while True:
         maze.convert_maze()
         ia.get_IA_position(maze.maze)
-        step_to_bonus = Breadth_First_Search().run(ia.posy, ia.posx,
-                                                   maze.maze, maze.bonus)
-        step_to_coin = Breadth_First_Search().run(ia.posy, ia.posx,
-                                                  maze.maze, maze.coin)
-        step_to_coin.reverse()
-        step_to_bonus.reverse()
-        len_coin = len(step_to_coin) - 1
-        len_bonus = len(step_to_bonus) - 1
-        if len_bonus > 0 and len_bonus <= 20:
-            step_to_bonus.remove(step_to_bonus[0])
-            if len_bonus * 2 <= len_coin:
-                for i in step_to_bonus:
-                    ia.move(i[0], i[1])
-                    maze.get_maze()
-                continue
-        if len(step_to_coin) > 0:
-            step_to_coin.remove(step_to_coin[0])
-            for i in step_to_coin:
-                ia.move(i[0], i[1])
-                maze.get_maze()
-        # step_to_res = Breadth_First_Search().run(ia.posy, ia.posx,
-        #                                          maze.maze,
-        #                                          maze.list_resoueces)
-        # step_to_res.reverse()
-        # step_to_res.remove(step_to_res[0])
-        # for i in step_to_res:
-        #     ia.move(i[0], i[1])
-        #     maze.get_maze()
+        # step_to_bonus = Breadth_First_Search().run(ia.posy, ia.posx,
+        #                                            maze.maze, maze.bonus)
+        # step_to_coin = Breadth_First_Search().run(ia.posy, ia.posx,
+        #                                           maze.maze, maze.coin)
+        # step_to_coin.reverse()
+        # step_to_bonus.reverse()
+        # len_coin = len(step_to_coin) - 1
+        # len_bonus = len(step_to_bonus) - 1
+        # if len_bonus > 0 and len_bonus <= 20:
+        #     step_to_bonus.remove(step_to_bonus[0])
+        #     if len_bonus * 2 <= len_coin:
+        #         for i in step_to_bonus:
+        #             ia.move(i[0], i[1])
+        #             maze.get_maze()
+        #         continue
+        # if len(step_to_coin) > 0:
+        #     step_to_coin.remove(step_to_coin[0])
+        #     for i in step_to_coin:
+        #         ia.move(i[0], i[1])
+        #         maze.get_maze()
+        step_to_res = Breadth_First_Search().run(ia.posy, ia.posx,
+                                                 maze.maze,
+                                                 maze.list_resoueces)
+        step_to_res.reverse()
+        step_to_res.remove(step_to_res[0])
+        for i in step_to_res:
+            ia.move(i[0], i[1])
+            maze.get_maze()
     return 0
 
 
